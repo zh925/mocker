@@ -1,19 +1,26 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import Pages from 'vite-plugin-pages'
-import path from 'path'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import path, { resolve } from "path";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), Pages({
-    dirs: 'src/pages',
-    exclude: ['**/components/*'],
-    extensions: ['tsx', 'jsx', 'ts', 'js'],
-    routeStyle: 'next',
-  })],
+  plugins: [
+    react(),
+  ],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, './src')
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        background: resolve(__dirname, 'src/background.ts')
+      },
+      output: {
+        entryFileNames: chunk => chunk.name === 'background' ? '[name].js' : '[name].[hash].js'
+      }
     }
   }
-})
+});

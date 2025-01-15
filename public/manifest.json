@@ -5,6 +5,9 @@
     "version": "1.0",
     "action": {
         "default_popup": "index.html",
-        "default_icon": "hello_extensions.png"
+        "default_icon": "mocker_logo.png"
+    },
+    "background": {
+        "service_worker": "background.js"
     }
 }
